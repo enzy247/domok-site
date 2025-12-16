@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог недвижимости — ДомОК</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+    
+    ym(98765432, 'init', {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/98765432" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+  <!-- Навигация -->
+  <header class="bg-white shadow-sm fixed w-full z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="index.html" class="flex items-center space-x-2">
+            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <i class="fas fa-home text-white"></i>
+            </div>
+            <span class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">ДомОК</span>
+          </a>
+        </div>
+        
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="catalog.html" class="text-indigo-600 font-medium">Каталог</a>
+          <a href="index.html#how-it-works" class="text-gray-700 hover:text-indigo-600 transition">Как это работает</a>
+          <a href="index.html#advantages" class="text-gray-700 hover:text-indigo-600 transition">Преимущества</a>
+          <a href="about.html" class="text-gray-700 hover:text-indigo-600 transition">О проекте</a>
+        </nav>
+
+        <div class="flex items-center space-x-4">
+          <button class="relative">
+            <i class="far fa-heart text-gray-600 text-xl hover:text-red-500 transition"></i>
+            <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+          </button>
+          
+          <!-- Кнопка профиля (появляется после входа) -->
+          <div id="userProfile" class="hidden items-center space-x-3">
+            <a href="profile.html" class="flex items-center space-x-2 hover:text-indigo-600 transition">
+              <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-white text-sm"></i>
+              </div>
+              <span class="font-medium hidden md:inline">Иван И.</span>
+            </a>
+            <button id="logoutBtn" class="text-gray-500 hover:text-red-600 transition">
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
+          </div>
+          
+          <!-- Кнопка входа (показывается если не авторизован) -->
+          <button id="openAuth" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+            <i class="fas fa-user mr-2"></i>Войти
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Основной контент -->
+  <main class="pt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex gap-8">
+        <!-- Боковая панель с фильтрами -->
+        <aside class="w-80 flex-shrink-0 hidden lg:block">
+          <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-xl font-bold">Фильтры</h2>
+              <button class="text-indigo-600 text-sm hover:text-indigo-700">Сбросить все</button>
+            </div>
+
+            <!-- Тип жилья -->
+            <div class="mb-6">
+              <h3 class="font-semibold mb-3">Тип жилья</h3>
+              <div class="space-y-2">
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>Квартира</span>
+                  <span class="text-gray-500 ml-auto">(234)</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>Студия</span>
+                  <span class="text-gray-500 ml-auto">(156)</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>Дом</span>
+                  <span class="text-gray-500 ml-auto">(45)</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>Комната</span>
+                  <span class="text-gray-500 ml-auto">(89)</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Ценовой диапазон -->
+            <div class="mb-6">
+              <h3 class="font-semibold mb-3">Цена за месяц</h3>
+              <div class="space-y-3">
+                <div class="flex gap-2">
+                  <input type="number" placeholder="От" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                  <input type="number" placeholder="До" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div class="relative pt-1">
+                  <input type="range" class="w-full" min="0" max="200000" step="5000">
+                  <div class="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>0 ₽</span>
+                    <span>200 000 ₽</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Количество комнат -->
+            <div class="mb-6">
+              <h3 class="font-semibold mb-3">Количество комнат</h3>
+              <div class="flex gap-2">
+                <button class="px-3 py-1 border border-gray-200 rounded-lg hover:border-indigo-600 hover:text-indigo-600 transition">Студия</button>
+                <button class="px-3 py-1 border border-gray-200 rounded-lg hover:border-indigo-600 hover:text-indigo-600 transition">1</button>
+                <button class="px-3 py-1 border border-gray-200 rounded-lg hover:border-indigo-600 hover:text-indigo-600 transition">2</button>
+                <button class="px-3 py-1 border border-gray-200 rounded-lg hover:border-indigo-600 hover:text-indigo-600 transition">3</button>
+                <button class="px-3 py-1 border border-gray-200 rounded-lg hover:border-indigo-600 hover:text-indigo-600 transition">4+</button>
+              </div>
+            </div>
+
+            <!-- Район -->
+            <div class="mb-6">
+              <h3 class="font-semibold mb-3">Район</h3>
+              <select class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <option>Все районы</option>
+                <option>Центральный</option>
+                <option>Северный</option>
+                <option>Южный</option>
+                <option>Восточный</option>
+                <option>Западный</option>
+              </select>
+            </div>
+
+            <!-- Удобства -->
+            <div class="mb-6">
+              <h3 class="font-semibold mb-3">Удобства</h3>
+              <div class="space-y-2">
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>Интернет</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>Кондиционер</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>Стиральная машина</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>Парковка</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>Можно с животными</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Дополнительные параметры -->
+            <div class="mb-6">
+              <h3 class="font-semibold mb-3">Дополнительно</h3>
+              <div class="space-y-2">
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>Только проверенные</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>С фото</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2 rounded text-indigo-600">
+                  <span>Без комиссии</span>
+                </label>
+              </div>
+            </div>
+
+            <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+              Применить фильтры
+            </button>
+          </div>
+        </aside>
+
+        <!-- Основная область с объектами -->
+        <div class="flex-1">
+          <!-- Заголовок и сортировка -->
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h1 class="text-3xl font-bold mb-2">Аренда жилья в Москве</h1>
+              <p class="text-gray-600">Найдено 524 объявления</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <select class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <option>По популярности</option>
+                <option>Сначала дешевле</option>
+                <option>Сначала дороже</option>
+                <option>По дате добавления</option>
+                <option>По рейтингу</option>
+              </select>
+              <div class="flex gap-2">
+                <button class="p-2 border border-gray-200 rounded-lg hover:border-indigo-600 hover:text-indigo-600 transition">
+                  <i class="fas fa-th-large"></i>
+                </button>
+                <button class="p-2 border border-gray-200 rounded-lg hover:border-indigo-600 hover:text-indigo-600 transition">
+                  <i class="fas fa-list"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Активные фильтры -->
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="inline-flex items-center px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm">
+              Квартира
+              <button class="ml-2 hover:text-indigo-900">
+                <i class="fas fa-times"></i>
+              </button>
+            </span>
+            <span class="inline-flex items-center px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm">
+              30 000 - 60 000 ₽
+              <button class="ml-2 hover:text-indigo-900">
+                <i class="fas fa-times"></i>
+              </button>
+            </span>
+            <span class="inline-flex items-center px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm">
+              2 комнаты
+              <button class="ml-2 hover:text-indigo-900">
+                <i class="fas fa-times"></i>
+              </button>
+            </span>
+          </div>
+
+          <!-- Сетка объектов -->
+          <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+            <!-- Карточка 1 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="relative">
+                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267" alt="Квартира" class="w-full h-56 object-cover">
+                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-medium">
+                  <i class="fas fa-star text-yellow-500 mr-1"></i>4.8
+                </div>
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full cursor-pointer hover:bg-white transition">
+                  <i class="far fa-heart text-gray-600 hover:text-red-500"></i>
+                </div>
+                <div class="absolute bottom-4 left-4 flex gap-2">
+                  <span class="bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-medium">
+                    <i class="fas fa-check-circle text-green-500 mr-1"></i>Проверено
+                  </span>
+                  <span class="bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-medium">
+                    <i class="fas fa-bolt text-yellow-500 mr-1"></i>Быстрая сделка
+                  </span>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-semibold mb-2">Уютная 2-комнатная квартира</h3>
+                <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i>м. Арбатская, 5 мин пешком</p>
+                <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                  <span><i class="fas fa-bed mr-1"></i>2 комнаты</span>
+                  <span><i class="fas fa-expand mr-1"></i>65 м²</span>
+                  <span><i class="fas fa-building mr-1"></i>7/12 этаж</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-3xl font-bold text-indigo-600">55 000 ₽</span>
+                    <span class="text-gray-500">/месяц</span>
+                  </div>
+                  <a href="property.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                    Подробнее
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Карточка 2 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="relative">
+                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688" alt="Студия" class="w-full h-56 object-cover">
+                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-medium">
+                  <i class="fas fa-star text-yellow-500 mr-1"></i>4.9
+                </div>
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full cursor-pointer hover:bg-white transition">
+                  <i class="far fa-heart text-gray-600 hover:text-red-500"></i>
+                </div>
+                <div class="absolute bottom-4 left-4 flex gap-2">
+                  <span class="bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-medium">
+                    <i class="fas fa-check-circle text-green-500 mr-1"></i>Проверено
+                  </span>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-semibold mb-2">Современная студия в новостройке</h3>
+                <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i>м. Технопарк, 10 мин пешком</p>
+                <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                  <span><i class="fas fa-bed mr-1"></i>Студия</span>
+                  <span><i class="fas fa-expand mr-1"></i>35 м²</span>
+                  <span><i class="fas fa-building mr-1"></i>15/25 этаж</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-3xl font-bold text-indigo-600">40 000 ₽</span>
+                    <span class="text-gray-500">/месяц</span>
+                  </div>
+                  <a href="property.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                    Подробнее
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Карточка 3 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="relative">
+                <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb" alt="Лофт" class="w-full h-56 object-cover">
+                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-medium">
+                  <i class="fas fa-star text-yellow-500 mr-1"></i>5.0
+                </div>
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full cursor-pointer hover:bg-white transition">
+                  <i class="fas fa-heart text-red-500"></i>
+                </div>
+                <div class="absolute bottom-4 left-4 flex gap-2">
+                  <span class="bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-medium">
+                    <i class="fas fa-crown text-yellow-500 mr-1"></i>Премиум
+                  </span>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-semibold mb-2">Лофт с панорамными окнами</h3>
+                <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i>Москва-Сити</p>
+                <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                  <span><i class="fas fa-bed mr-1"></i>3 комнаты</span>
+                  <span><i class="fas fa-expand mr-1"></i>120 м²</span>
+                  <span><i class="fas fa-building mr-1"></i>45/60 этаж</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-3xl font-bold text-indigo-600">150 000 ₽</span>
+                    <span class="text-gray-500">/месяц</span>
+                  </div>
+                  <a href="property.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                    Подробнее
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Карточка 4 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="relative">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750" alt="Дом" class="w-full h-56 object-cover">
+                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-medium">
+                  <i class="fas fa-star text-yellow-500 mr-1"></i>4.7
+                </div>
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full cursor-pointer hover:bg-white transition">
+                  <i class="far fa-heart text-gray-600 hover:text-red-500"></i>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-semibold mb-2">Загородный дом с участком</h3>
+                <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i>Рублёвка, 15 км от МКАД</p>
+                <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                  <span><i class="fas fa-bed mr-1"></i>5 комнат</span>
+                  <span><i class="fas fa-expand mr-1"></i>250 м²</span>
+                  <span><i class="fas fa-tree mr-1"></i>15 соток</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-3xl font-bold text-indigo-600">200 000 ₽</span>
+                    <span class="text-gray-500">/месяц</span>
+                  </div>
+                  <a href="property.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                    Подробнее
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Карточка 5 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="relative">
+                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" alt="Квартира" class="w-full h-56 object-cover">
+                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-medium">
+                  <i class="fas fa-star text-yellow-500 mr-1"></i>4.6
+                </div>
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full cursor-pointer hover:bg-white transition">
+                  <i class="far fa-heart text-gray-600 hover:text-red-500"></i>
+                </div>
+                <div class="absolute bottom-4 left-4 flex gap-2">
+                  <span class="bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-medium">
+                    <i class="fas fa-paw text-blue-500 mr-1"></i>Можно с животными
+                  </span>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-semibold mb-2">Светлая квартира у парка</h3>
+                <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i>м. Сокольники, 7 мин пешком</p>
+                <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                  <span><i class="fas fa-bed mr-1"></i>1 комната</span>
+                  <span><i class="fas fa-expand mr-1"></i>45 м²</span>
+                  <span><i class="fas fa-building mr-1"></i>3/5 этаж</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-3xl font-bold text-indigo-600">35 000 ₽</span>
+                    <span class="text-gray-500">/месяц</span>
+                  </div>
+                  <a href="property.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                    Подробнее
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Карточка 6 -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="relative">
+                <img src="https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd" alt="Комната" class="w-full h-56 object-cover">
+                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-medium">
+                  <i class="fas fa-star text-yellow-500 mr-1"></i>4.5
+                </div>
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full cursor-pointer hover:bg-white transition">
+                  <i class="far fa-heart text-gray-600 hover:text-red-500"></i>
+                </div>
+                <div class="absolute bottom-4 left-4 flex gap-2">
+                  <span class="bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-medium">
+                    <i class="fas fa-graduation-cap text-purple-500 mr-1"></i>Рядом с ВУЗом
+                  </span>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-semibold mb-2">Комната в 3-комнатной квартире</h3>
+                <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i>м. Университет, 3 мин пешком</p>
+                <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                  <span><i class="fas fa-bed mr-1"></i>Комната</span>
+                  <span><i class="fas fa-expand mr-1"></i>18 м²</span>
+                  <span><i class="fas fa-building mr-1"></i>4/9 этаж</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-3xl font-bold text-indigo-600">20 000 ₽</span>
+                    <span class="text-gray-500">/месяц</span>
+                  </div>
+                  <a href="property.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                    Подробнее
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Пагинация -->
+          <div class="flex items-center justify-center gap-2">
+            <button class="px-3 py-2 rounded-lg hover:bg-gray-100 transition">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg">1</button>
+            <button class="px-4 py-2 hover:bg-gray-100 rounded-lg transition">2</button>
+            <button class="px-4 py-2 hover:bg-gray-100 rounded-lg transition">3</button>
+            <span class="px-2">...</span>
+            <button class="px-4 py-2 hover:bg-gray-100 rounded-lg transition">24</button>
+            <button class="px-3 py-2 rounded-lg hover:bg-gray-100 transition">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Футер -->
+  <footer class="bg-gray-900 text-white py-12 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-4">
+            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <i class="fas fa-home text-white"></i>
+            </div>
+            <span class="text-2xl font-bold">ДомОК</span>
+          </div>
+          <p class="text-gray-400">Современная платформа для безопасной аренды жилья</p>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-4">Сервис</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="index.html#how-it-works" class="hover:text-white transition">Как это работает</a></li>
+            <li><a href="#" class="hover:text-white transition">Тарифы</a></li>
+            <li><a href="#" class="hover:text-white transition">Безопасность</a></li>
+            <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-4">Компания</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="about.html" class="hover:text-white transition">О проекте</a></li>
+            <li><a href="#" class="hover:text-white transition">Блог</a></li>
+            <li><a href="#" class="hover:text-white transition">Карьера</a></li>
+            <li><a href="#" class="hover:text-white transition">Контакты</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-4">Подписка на новости</h4>
+          <p class="text-gray-400 mb-4">Получайте лучшие предложения первыми</p>
+          <form class="flex">
+            <input type="email" placeholder="Ваш email" class="bg-gray-800 text-white px-4 py-2 rounded-l-lg flex-1 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <button type="button" class="bg-indigo-600 px-4 py-2 rounded-r-lg hover:bg-indigo-700 transition">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400">© 2025 ДомОК. Все права защищены.</p>
+        <div class="flex space-x-4 mt-4 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-vk text-xl"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-telegram text-xl"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Модальное окно авторизации -->
+  <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md transform transition-all scale-95 opacity-0" id="authModalContent">
+      <div class="p-8">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold">Вход в аккаунт</h3>
+          <button id="closeAuth" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+        </div>
+
+        <div class="flex gap-2 mb-6">
+          <button id="loginTab" class="flex-1 py-2 text-center font-medium text-indigo-600 border-b-2 border-indigo-600">Вход</button>
+          <button id="registerTab" class="flex-1 py-2 text-center font-medium text-gray-500 border-b-2 border-gray-200">Регистрация</button>
+        </div>
+
+        <!-- Форма входа -->
+        <form id="loginForm" class="space-y-4">
+          <div>
+            <label class="block text-gray-700 mb-2">Email или телефон</label>
+            <div class="relative">
+              <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <input type="text" id="loginEmail" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="example@mail.ru">
+            </div>
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Пароль</label>
+            <div class="relative">
+              <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <input type="password" id="loginPassword" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="••••••••">
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <label class="flex items-center">
+              <input type="checkbox" class="mr-2" id="rememberMe">
+              <span class="text-gray-600">Запомнить меня</span>
+            </label>
+            <a href="#" class="text-indigo-600 hover:text-indigo-700">Забыли пароль?</a>
+          </div>
+          <button type="button" id="loginSubmit" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+            Войти
+          </button>
+        </form>
+
+        <!-- Форма регистрации (скрыта по умолчанию) -->
+        <form id="registerForm" class="space-y-4 hidden">
+          <div>
+            <label class="block text-gray-700 mb-2">Имя</label>
+            <input type="text" id="registerName" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Иван Иванов">
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Email</label>
+            <input type="email" id="registerEmail" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="example@mail.ru">
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Телефон</label>
+            <input type="tel" id="registerPhone" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="+7 (999) 123-45-67">
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Пароль</label>
+            <input type="password" id="registerPassword" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Минимум 8 символов">
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" class="mr-2" id="agree">
+            <label for="agree" class="text-gray-600">Согласен с <a href="#" class="text-indigo-600">условиями использования</a></label>
+          </div>
+          <button type="button" id="registerSubmit" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+            Зарегистрироваться
+          </button>
+        </form>
+
+        <div class="mt-6">
+          <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-gray-200"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-white text-gray-500">или войдите через</span>
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-2 gap-3">
+            <button type="button" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+              <img src="https://www.svgrepo.com/show/355037/google.svg" class="w-5 h-5 mr-2" alt="Google">
+              Google
+            </button>
+            <button type="button" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Gosuslugi_logo.svg" class="w-5 h-5 mr-2" alt="Госуслуги">
+              Госуслуги
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Проверка авторизации при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const userName = localStorage.getItem('userName') || 'Иван И.';
+      
+      const userProfile = document.getElementById('userProfile');
+      const openAuthBtn = document.getElementById('openAuth');
+      
+      if (isLoggedIn && userProfile && openAuthBtn) {
+        userProfile.classList.remove('hidden');
+        openAuthBtn.classList.add('hidden');
+        // Обновляем имя пользователя
+        const userNameElement = userProfile.querySelector('span');
+        if (userNameElement) {
+          userNameElement.textContent = userName;
+        }
+      }
+    });
+
+    // Модальное окно авторизации
+    const authModal = document.getElementById('authModal');
+    const authModalContent = document.getElementById('authModalContent');
+    const openAuthBtn = document.getElementById('openAuth');
+    const closeAuthBtn = document.getElementById('closeAuth');
+    const loginTab = document.getElementById('loginTab');
+    const registerTab = document.getElementById('registerTab');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const loginSubmit = document.getElementById('loginSubmit');
+    const registerSubmit = document.getElementById('registerSubmit');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    if (openAuthBtn) {
+      openAuthBtn.addEventListener('click', () => {
+        authModal.classList.remove('hidden');
+        setTimeout(() => {
+          authModalContent.classList.remove('scale-95', 'opacity-0');
+          authModalContent.classList.add('scale-100', 'opacity-100');
+        }, 10);
+      });
+    }
+
+    if (closeAuthBtn) {
+      closeAuthBtn.addEventListener('click', () => {
+        closeModal();
+      });
+    }
+
+    function closeModal() {
+      authModalContent.classList.add('scale-95', 'opacity-0');
+      authModalContent.classList.remove('scale-100', 'opacity-100');
+      setTimeout(() => {
+        authModal.classList.add('hidden');
+      }, 300);
+    }
+
+    if (loginTab) {
+      loginTab.addEventListener('click', () => {
+        loginTab.classList.add('text-indigo-600', 'border-indigo-600');
+        loginTab.classList.remove('text-gray-500', 'border-gray-200');
+        registerTab.classList.add('text-gray-500', 'border-gray-200');
+        registerTab.classList.remove('text-indigo-600', 'border-indigo-600');
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
+      });
+    }
+
+    if (registerTab) {
+      registerTab.addEventListener('click', () => {
+        registerTab.classList.add('text-indigo-600', 'border-indigo-600');
+        registerTab.classList.remove('text-gray-500', 'border-gray-200');
+        loginTab.classList.add('text-gray-500', 'border-gray-200');
+        loginTab.classList.remove('text-indigo-600', 'border-indigo-600');
+        registerForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+      });
+    }
+
+    // Обработка входа
+    if (loginSubmit) {
+      loginSubmit.addEventListener('click', function() {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        if (!email || !password) {
+          alert('Пожалуйста, заполните все поля');
+          return;
+        }
+        
+        // Имитация успешного входа
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userName', 'Иван И.');
+        
+        // Обновляем интерфейс
+        const userProfile = document.getElementById('userProfile');
+        const openAuthBtn = document.getElementById('openAuth');
+        if (userProfile && openAuthBtn) {
+          userProfile.classList.remove('hidden');
+          openAuthBtn.classList.add('hidden');
+        }
+        
+        // Закрываем модальное окно
+        closeModal();
+        
+        // Показываем уведомление
+        showNotification('Вы успешно вошли в систему!', 'success');
+      });
+    }
+
+    // Обработка регистрации
+    if (registerSubmit) {
+      registerSubmit.addEventListener('click', function() {
+        const name = document.getElementById('registerName').value;
+        const email = document.getElementById('registerEmail').value;
+        const phone = document.getElementById('registerPhone').value;
+        const password = document.getElementById('registerPassword').value;
+        
+        if (!name || !email || !phone || !password) {
+          alert('Пожалуйста, заполните все поля');
+          return;
+        }
+        
+        if (password.length < 8) {
+          alert('Пароль должен содержать минимум 8 символов');
+          return;
+        }
+        
+        // Имитация успешной регистрации
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userName', name);
+        localStorage.setItem('userPhone', phone);
+        
+        // Обновляем интерфейс
+        const userProfile = document.getElementById('userProfile');
+        const openAuthBtn = document.getElementById('openAuth');
+        if (userProfile && openAuthBtn) {
+          userProfile.classList.remove('hidden');
+          openAuthBtn.classList.add('hidden');
+        }
+        
+        // Закрываем модальное окно
+        closeModal();
+        
+        // Показываем уведомление
+        showNotification('Регистрация прошла успешно! Добро пожаловать, ' + name + '!', 'success');
+      });
+    }
+
+    // Обработка выхода
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', function() {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userPhone');
+        
+        // Обновляем интерфейс
+        const userProfile = document.getElementById('userProfile');
+        const openAuthBtn = document.getElementById('openAuth');
+        if (userProfile && openAuthBtn) {
+          userProfile.classList.add('hidden');
+          openAuthBtn.classList.remove('hidden');
+        }
+        
+        // Показываем уведомление
+        showNotification('Вы вышли из системы', 'info');
+      });
+    }
+
+    // Закрытие при клике вне модального окна
+    if (authModal) {
+      authModal.addEventListener('click', (e) => {
+        if (e.target === authModal) {
+          closeModal();
+        }
+      });
+    }
+
+    // Функция показа уведомлений
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full ${
+        type === 'success' ? 'bg-green-500 text-white' :
+        type === 'error' ? 'bg-red-500 text-white' :
+        'bg-blue-500 text-white'
+      }`;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      // Анимация появления
+      setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+      }, 10);
+      
+      // Автоматическое скрытие через 5 секунд
+      setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 5000);
+      
+      // Возможность закрыть по клику
+      notification.addEventListener('click', () => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      });
+    }
+  </script>
+</body>
+</html>

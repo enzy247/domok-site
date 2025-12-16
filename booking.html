@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бронирование квартиры — ДомОК</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+    
+    ym(98765432, 'init', {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/98765432" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+  <!-- Навигация -->
+  <header class="bg-white shadow-sm fixed w-full z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="index.html" class="flex items-center space-x-2">
+            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <i class="fas fa-home text-white"></i>
+            </div>
+            <span class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">ДомОК</span>
+          </a>
+        </div>
+        
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="catalog.html" class="text-gray-700 hover:text-indigo-600 transition">Каталог</a>
+          <a href="index.html#how-it-works" class="text-gray-700 hover:text-indigo-600 transition">Как это работает</a>
+          <a href="index.html#advantages" class="text-gray-700 hover:text-indigo-600 transition">Преимущества</a>
+          <a href="about.html" class="text-gray-700 hover:text-indigo-600 transition">О проекте</a>
+        </nav>
+
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
+            <span class="font-medium">Иван И.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Основной контент -->
+  <main class="pt-24 pb-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Прогресс бар -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-semibold">1</div>
+            <span class="ml-3 font-medium">Данные арендатора</span>
+          </div>
+          <div class="flex-1 mx-4 h-1 bg-gray-200 rounded">
+            <div class="h-full w-1/3 bg-indigo-600 rounded"></div>
+          </div>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center font-semibold">2</div>
+            <span class="ml-3 text-gray-400">Подтверждение</span>
+          </div>
+          <div class="flex-1 mx-4 h-1 bg-gray-200 rounded"></div>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center font-semibold">3</div>
+            <span class="ml-3 text-gray-400">Оплата</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Форма бронирования -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-2xl shadow-lg p-8 mb-6">
+            <h1 class="text-3xl font-bold mb-6">Оформление бронирования</h1>
+
+            <!-- Информация об объекте -->
+            <div class="bg-gray-50 rounded-xl p-6 mb-8">
+              <div class="flex items-start gap-4">
+                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267" alt="Квартира" class="w-24 h-24 rounded-lg object-cover">
+                <div class="flex-1">
+                  <h3 class="font-semibold text-lg mb-1">Уютная 2-комнатная квартира</h3>
+                  <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i>м. Арбатская, ул. Новый Арбат, д. 15</p>
+                  <div class="flex items-center gap-4 text-sm text-gray-500">
+                    <span><i class="fas fa-calendar mr-1"></i>Заезд: 01.02.2025</span>
+                    <span><i class="fas fa-clock mr-1"></i>Срок: 3 месяца</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Данные арендатора -->
+            <div class="mb-8">
+              <h2 class="text-2xl font-bold mb-6">Данные арендатора</h2>
+              
+              <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Фамилия</label>
+                  <input type="text" value="Иванов" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Имя</label>
+                  <input type="text" value="Иван" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Отчество</label>
+                  <input type="text" value="Иванович" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Дата рождения</label>
+                  <input type="date" value="1990-05-15" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+              </div>
+
+              <!-- Контактные данные -->
+              <h3 class="text-xl font-semibold mb-4">Контактные данные</h3>
+              <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Номер телефона</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <span class="text-gray-500">+7</span>
+                    </div>
+                    <input type="tel" value="(999) 123-45-67" class="w-full pl-12 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Электронная почта</label>
+                  <input type="email" value="ivanov@example.com" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+              </div>
+
+              <!-- Паспортные данные -->
+              <h3 class="text-xl font-semibold mb-4">Паспортные данные</h3>
+              <div class="grid md:grid-cols-3 gap-6 mb-6">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Серия и номер</label>
+                  <input type="text" value="4510 123456" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Кем выдан</label>
+                  <input type="text" value="ОУФМС России по г. Москве" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Дата выдачи</label>
+                  <input type="date" value="2015-06-20" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+              </div>
+
+              <!-- Соглашение -->
+              <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8">
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0 mt-1">
+                    <input type="checkbox" id="agreement" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500">
+                  </div>
+                  <div>
+                    <label for="agreement" class="font-medium text-gray-800 cursor-pointer">
+                      Даю согласие на обработку персональных данных
+                    </label>
+                    <p class="text-gray-600 mt-2 text-sm">
+                      Я подтверждаю, что предоставленные мной данные являются достоверными. 
+                      Соглашаюсь на обработку моих персональных данных в соответствии с 
+                      <a href="#" class="text-indigo-600 hover:underline">Политикой конфиденциальности</a> 
+                      и даю согласие на проверку моих данных службой безопасности ДомОК.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Кнопки -->
+              <div class="flex flex-col sm:flex-row gap-4">
+                <button onclick="window.history.back()" class="px-8 py-3.5 border-2 border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition duration-300">
+                  <i class="fas fa-arrow-left mr-2"></i>Назад
+                </button>
+                <button onclick="submitForm()" class="flex-1 px-8 py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-xl hover:opacity-90 transition duration-300 shadow-lg hover:shadow-xl">
+                  Продолжить бронирование
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Боковая панель с итогами -->
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-2xl shadow-lg p-8 sticky top-24">
+            <h3 class="text-xl font-bold mb-6">Итоги бронирования</h3>
+            
+            <div class="space-y-4 mb-6">
+              <div class="flex justify-between">
+                <span class="text-gray-600">Аренда на 3 месяца</span>
+                <span class="font-medium">90 000 ₽</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Комиссия сервиса</span>
+                <span class="font-medium">4 500 ₽</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Страховой депозит</span>
+                <span class="font-medium">30 000 ₽</span>
+              </div>
+            </div>
+            
+            <div class="border-t pt-4 mb-6">
+              <div class="flex justify-between text-lg font-bold">
+                <span>Итого к оплате</span>
+                <span class="text-indigo-600">124 500 ₽</span>
+              </div>
+              <p class="text-sm text-gray-500 mt-2">Депозит будет возвращен после проверки квартиры</p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-xl p-4">
+              <h4 class="font-semibold mb-2">Что включено:</h4>
+              <ul class="space-y-2 text-sm">
+                <li class="flex items-center">
+                  <i class="fas fa-check text-green-500 mr-2"></i>
+                  <span>Подготовка договора</span>
+                </li>
+                <li class="flex items-center">
+                  <i class="fas fa-check text-green-500 mr-2"></i>
+                  <span>Юридическая проверка</span>
+                </li>
+                <li class="flex items-center">
+                  <i class="fas fa-check text-green-500 mr-2"></i>
+                  <span>Круглосуточная поддержка</span>
+                </li>
+                <li class="flex items-center">
+                  <i class="fas fa-check text-green-500 mr-2"></i>
+                  <span>Страхование депозита</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function submitForm() {
+      const agreement = document.getElementById('agreement');
+      
+      if (!agreement.checked) {
+        alert('Пожалуйста, подтвердите согласие на обработку персональных данных');
+        agreement.focus();
+        return;
+      }
+      
+      // Здесь будет переход на следующий шаг
+      alert('Данные сохранены! Переход к подтверждению бронирования...');
+      // window.location.href = 'booking-step2.html';
+    }
+    
+    // Плавное выделение полей при фокусе
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.classList.add('ring-2', 'ring-indigo-200');
+      });
+      
+      input.addEventListener('blur', function() {
+        this.parentElement.classList.remove('ring-2', 'ring-indigo-200');
+      });
+    });
+  </script>
+</body>
+</html>
