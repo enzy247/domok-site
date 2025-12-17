@@ -6,6 +6,15 @@
   <title>О проекте — ДомОК</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Библиотека для отображения mermaid диаграмм -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      securityLevel: 'loose'
+    });
+  </script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
 
@@ -303,8 +312,183 @@
       </div>
     </section>
 
-    <!-- Этапы разработки -->
+    <!-- UML Диаграммы -->
     <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl font-bold text-center mb-12">Архитектура и процессы проекта</h2>
+        
+        <div class="bg-gray-50 rounded-2xl p-8 mb-12">
+          <h3 class="text-2xl font-bold mb-6 text-indigo-600">Диаграмма последовательности процесса аренды</h3>
+          <p class="text-gray-600 mb-6">Визуализация взаимодействия между участниками системы при бронировании жилья</p>
+          <div class="mermaid">
+            sequenceDiagram
+              participant A as Арендатор
+              participant S as Система ДомОК
+              participant L as Арендодатель
+              participant P as Платежная система
+              
+              A->>S: Поиск жилья
+              S->>S: Фильтрация
+              S->>A: Список объектов
+              A->>S: Выбор объекта
+              S->>L: Уведомление о заявке
+              L->>S: Подтверждение
+              S->>A: Запрос оплаты
+              A->>P: Оплата
+              P->>S: Подтверждение
+              S->>L: Уведомление об оплате
+              S->>A: Подтверждение брони
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Диаграмма классов -->
+          <div class="bg-gray-50 rounded-2xl p-8">
+            <h3 class="text-2xl font-bold mb-6 text-purple-600">Диаграмма классов системы</h3>
+            <p class="text-gray-600 mb-6">Основные сущности и их взаимосвязи в системе</p>
+            <div class="mermaid">
+              classDiagram
+                class User {
+                  +String id
+                  +String email
+                  +String phone
+                  +register()
+                  +login()
+                }
+
+                class Tenant {
+                  +searchHousing()
+                  +bookProperty()
+                  +payBooking()
+                }
+
+                class Landlord {
+                  +addProperty()
+                  +confirmBooking()
+                  +viewStatistics()
+                }
+
+                class Property {
+                  +String address
+                  +Double price
+                  +Boolean available
+                }
+
+                class Booking {
+                  +Date startDate
+                  +Date endDate
+                  +String status
+                }
+
+                User <|-- Tenant
+                User <|-- Landlord
+                Tenant --> Booking
+                Landlord --> Property
+                Booking --> Property
+            </div>
+          </div>
+
+          <!-- Диаграмма состояний -->
+          <div class="bg-gray-50 rounded-2xl p-8">
+            <h3 class="text-2xl font-bold mb-6 text-pink-600">Диаграмма состояний объекта</h3>
+            <p class="text-gray-600 mb-6">Жизненный цикл объекта недвижимости в системе</p>
+            <div class="mermaid">
+              graph TD
+                New[Новый объект] --> Moderation[На модерации]
+                Moderation --> Approved[Одобрено]
+                Moderation --> Rejected[Отклонено]
+                Approved --> Available[Доступно]
+                Available --> Booked[Забронировано]
+                Booked --> Paid[Оплачено]
+                Paid --> Active[Активная аренда]
+                Active --> Completed[Завершено]
+                Active --> Cancelled[Отменено]
+                Completed --> Available
+                Cancelled --> Available
+            </div>
+          </div>
+
+          <!-- Диаграмма компонентов -->
+          <div class="bg-gray-50 rounded-2xl p-8">
+            <h3 class="text-2xl font-bold mb-6 text-orange-600">Диаграмма компонентов</h3>
+            <p class="text-gray-600 mb-6">Архитектура компонентов системы</p>
+            <div class="mermaid">
+              graph TD
+                Client[Веб-клиент] --> Gateway[API Gateway]
+                Mobile[Мобильное приложение] --> Gateway
+                
+                Gateway --> Auth[Сервис авторизации]
+                Gateway --> Search[Сервис поиска]
+                Gateway --> Booking[Сервис бронирования]
+                Gateway --> Payment[Платежный сервис]
+                
+                Auth --> DB1[(База пользователей)]
+                Search --> DB2[(База объектов)]
+                Booking --> DB3[(База бронирований)]
+                Payment --> Ext[Внешние платежные системы]
+            </div>
+          </div>
+
+          <!-- Диаграмма развертывания -->
+          <div class="bg-gray-50 rounded-2xl p-8">
+            <h3 class="text-2xl font-bold mb-6 text-blue-600">Диаграмма развертывания</h3>
+            <p class="text-gray-600 mb-6">Инфраструктура и развертывание системы</p>
+            <div class="mermaid">
+              graph TD
+                User[Пользователь] --> LB[Балансировщик нагрузки]
+                LB --> WS1[Веб-сервер 1]
+                LB --> WS2[Веб-сервер 2]
+                WS1 --> DB[(Кластер БД)]
+                WS2 --> DB
+                WS1 --> Cache[(Кэш Redis)]
+                WS2 --> Cache
+                DB --> Backup[(Резервное хранилище)]
+                Ext[Платежные системы] --> Payment[Платежный шлюз]
+                Payment --> WS1
+                Payment --> WS2
+            </div>
+          </div>
+        </div>
+
+        <!-- UseCase диаграмма -->
+        <div class="bg-gray-50 rounded-2xl p-8 mt-8">
+          <h3 class="text-2xl font-bold mb-6 text-green-600">UseCase диаграмма</h3>
+          <p class="text-gray-600 mb-6">Сценарии использования системы различными типами пользователей</p>
+          <div class="mermaid">
+            graph LR
+              A[Гость] --> UC1[Поиск]
+              A --> UC2[Просмотр]
+              
+              B[Арендатор] --> UC3[Бронирование]
+              B --> UC4[Оплата]
+              
+              C[Арендодатель] --> UC5[Добавление]
+              C --> UC6[Управление]
+              
+              D[Админ] --> UC7[Модерация]
+              
+              subgraph "Публичный доступ"
+                UC1
+                UC2
+              end
+              
+              subgraph "Клиентские функции"
+                UC3
+                UC4
+              end
+              
+              subgraph "Управление"
+                UC5
+                UC6
+                UC7
+              end
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Этапы разработки -->
+    <section class="py-20 bg-gray-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-4xl font-bold text-center mb-12">Этапы разработки проекта</h2>
         
